@@ -101,3 +101,72 @@ btnSalvar.addEventListener('click', () =>{
 })
 
 
+/*Alteração de foto de perfil */
+
+const btnTrocarFoto = document.querySelector('#btn-trocar-foto');
+const fotoOpcoes    = document.querySelector('#foto-opcoes');
+const fotoPerfil    = document.querySelector('#foto-perfil');
+
+btnTrocarFoto.addEventListener('click', () =>{
+    if(fotoOpcoes.style.display === 'block'){
+        fotoOpcoes.style.display = 'none';
+    } else{
+        fotoOpcoes.style.display = 'block';
+        formEdicao.style.display = 'none';
+    }
+});
+
+const todasFotos = document.querySelectorAll('.foto-opcao');
+
+todasFotos.forEach(opcao => {
+    opcao.addEventListener('click', () =>{
+        const seed = opcao.dataset.seed;
+
+        fotoPerfil.src = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}`;
+        todasFotos.forEach(f => f.classList.remove('selecionada'));
+        opcao.classList.add('selecionada');
+
+        fotoOpcoes.style.display = 'none';
+        console.log(`Avatar trocado para: ${seed}`);
+        
+    });
+});
+
+
+
+/* Verificar Conta e fazer upgrade */
+
+const btnVerificar = document.querySelector('#btn-verificar');
+const badgeVericiacao = document.querySelector('#badge-verificacao');
+const totalConexoes = document.querySelector('#total-conexoes');
+
+btnVerificar.addEventListener('click', ()=>{
+    badgeVericiacao.className = 'badge badge-green';
+    badgeVericiacao.textContent = 'Verificado';
+
+    const atual = parseInt(totalConexoes.textContent);
+    totalConexoes.textContent = atual + 1;
+
+    btnVerificar.textContent = 'Conta Verificada';
+    btnVerificar.disabled    = true;
+});
+
+const btnUpgrade = document.querySelector('#btn-upgrade');
+const badgePlano = document.querySelector('#badge-plano');
+const statusUpgrade = document.querySelector('#status-badge');
+
+btnUpgrade.addEventListener('click', () => {
+    badgePlano.className = 'badge badge-purple';
+    badgePlano.textContent = 'Premium';
+
+    btnUpgrade.textContent = 'Plano Premium Ativado';
+    btnUpgrade.disabled = true;
+
+    const atual = parseInt(totalConexoes.textContent);
+    totalConexoes.textContent = atual + 50;
+
+    statusBadge.innerHTML = 'Premium';
+    statusBadge.style.background = '#faf5ff';
+    statusBadge.style.color = '#7c3aed';
+
+});
